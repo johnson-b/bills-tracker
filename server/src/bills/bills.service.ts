@@ -24,7 +24,6 @@ export class BillsService extends BaseService<Bill> {
             amountDue,
             budgetAmount,
             isAutoPaid,
-            category, 
             isSubscription,
             type
         } = params;
@@ -36,7 +35,6 @@ export class BillsService extends BaseService<Bill> {
         newBill.amountDue = amountDue;
         newBill.budgetAmount = budgetAmount;
         newBill.isAutoPaid = isAutoPaid;
-        newBill.category = category;
         newBill.isSubscription = isSubscription;
         newBill.type = type;
 

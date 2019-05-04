@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { faMinusCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MatDialog } from '@angular/material';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { NewBillDialogComponent } from '../new-bill-dialog/new-bill-dialog.component';
+import { BillsStateService } from '../services/bills-state.service';
 
 @Component({
   selector: 'app-bills',
@@ -8,14 +12,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
   styleUrls: ['./bills.component.scss']
 })
 export class BillsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'type', 'isActive', 'dueDay', 'isVariableDueDate', 'amountDue', 'budgetAmount',
-                                'isAutoPaid', 'isSubscription'];
 
-  private _billSource$: BehaviorSubject<any> = new BehaviorSubject([]);
+  deleteIcon = faMinusCircle;
+  plusIcon = faPlus;
+
+  displayedColumns: string[] = ['deleteAction', 'name', 'type', 'isActive', 'dueDay', 'isVariableDueDate', 'amountDue', 'budgetAmount',
+                                'isAutoPaid', 'isSubscription'];
   billSource$: Observable<any>;
 
-  constructor(private httpClient: HttpClient) {
-    this.billSource$ = this._billSource$.asObservable();
+  constructor(public dialog: MatDialog,
+              private billState: BillsStateService) {
+      this.billSource$ = billState.bills$;
   }
 
   ngOnInit() {
@@ -23,7 +30,19 @@ export class BillsComponent implements OnInit {
   }
 
   init() {
-    this.httpClient.get('http://localhost:8080/api/bills').subscribe(bills => this._billSource$.next(bills));
+    this.billState.refreshBills();
   }
 
+  onDelete(element) {
+    this.dialog.open(DeleteDialogComponent, {
+      width: '33%',
+      data: element.id
+    });
+  }
+
+  onNewBill() {
+    this.dialog.open(NewBillDialogComponent, {
+      width: '50%'
+    });
+  }
 }

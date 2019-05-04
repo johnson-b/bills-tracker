@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>New Bill</h1>
+<div mat-dialog-content>
+  <form (ngSubmit)="onCreateNewBill()" #newBillForm="ngForm" [formGroup]="billForm">
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50%">
+        <input matInput formControlName="name" placeholder="name" name="name" type="text" id="name">
+        <mat-error *ngIf="nameControl?.invalid">{{ getErrorMessage(nameControl, 'Name') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="50%">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option *ngFor="let billType of billTypes" [value]="billType">{{ billTypesEnum[billType] }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="typeControl?.invalid">{{ getErrorMessage(typeControl, 'Type') }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50%">
+        <input matInput formControlName="amountDue" type="number" min="0" placeholder="amount due" name="amountdue"
+          id="amountdue">
+        <mat-error *ngIf="amountDueControl?.invalid">{{ getErrorMessage(amountDueControl, 'Amount Due') }}</mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="50%">
+        <input matInput formControlName="budgetAmount" type="number" min="0" placeholder="budget amount"
+          name="budgetamount" id="budgetamount">
+        <mat-error *ngIf="budgetAmountControl?.invalid">{{ getErrorMessage(budgetAmountControl, 'Budget Amount') }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50%">
+        <input matInput formControlName="dueDay" type="number" min="0" max="31" placeholder="due day" name="dueday"
+          id="dueday">
+        <mat-error *ngIf="dueDayControl?.invalid">{{ getErrorMessage(dueDayControl, 'Due Day') }}</mat-error>
+      </mat-form-field>
+      <div fxFlex="50%" fxLayout="row" class="mat-form-field">
+        <div fxFlex="50%">
+          <mat-checkbox color="primary" formControlName="isActive">Is Active?</mat-checkbox>
+        </div>
+        <div fxFlex="50%">
+          <mat-checkbox color="primary" formControlName="isAutoPaid">Is Auto Paid?</mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row">
+      <div fxFlex="50%" fxLayout="column" class="mat-form-field">
+        <div fxFlex="50%">
+          <mat-checkbox color="primary" formControlName="isSubscription">Is Subscription?</mat-checkbox>
+        </div>
+        <div fxFlex="50%">
+          <mat-checkbox color="primary" formControlName="isVariableDueDate">Has Variable Due Date?</mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [disabled]="billForm?.invalid" color="accent" (click)="onCreateNewBill()">Save</button>
+</div>

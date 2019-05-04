@@ -1,3 +1,14 @@
+@import '../../styles/variables';
+
+mat-card {
+  margin: 1rem;
+}
+
+button {
+  background-color: $brand-accent;
+  color: white;
+}
+
 .bills-table {
   width: 100%;
 }
