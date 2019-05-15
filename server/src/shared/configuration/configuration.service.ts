@@ -4,7 +4,8 @@ import { get } from 'config';
 
 @Injectable()
 export class ConfigurationService {
-  static connectionString: string = process.env[Configuration.MONGO_URI] || get(Configuration.MONGO_URI);
+  // static connectionString: string = process.env[Configuration.MONGO_URI] || get(Configuration.MONGO_URI);
+  static connectionString: string = 'mongodb://localhost/bills-tracker'
   private environmentHosting: string = process.env.NODE_ENV || 'development';
 
   get(name: string): string {
