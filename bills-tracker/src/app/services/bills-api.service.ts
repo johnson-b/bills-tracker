@@ -20,7 +20,11 @@ export class BillsApiService {
     return this.http.delete<Bill>(`${this.serverBaseUrl}/bills/${billId}`);
   }
 
-  saveBill(bill: Bill): Observable<Bill> {
+  upsertBill(bill: Bill): Observable<Bill> {
+    if (bill.id) {
+      return this.http.put<Bill>(`${this.serverBaseUrl}/bills`, bill);
+    }
+
     return this.http.post<Bill>(`${this.serverBaseUrl}/bills`, bill);
   }
 }

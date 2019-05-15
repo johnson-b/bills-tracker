@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { faMinusCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinusCircle, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { NewBillDialogComponent } from '../new-bill-dialog/new-bill-dialog.component';
 import { BillsStateService } from '../services/bills-state.service';
+import { Bill } from '../models/bill.model';
 
 @Component({
   selector: 'app-bills',
@@ -15,9 +16,10 @@ export class BillsComponent implements OnInit {
 
   deleteIcon = faMinusCircle;
   plusIcon = faPlus;
+  caretDownIcon = faCaretDown;
 
   displayedColumns: string[] = ['deleteAction', 'name', 'type', 'isActive', 'dueDay', 'isVariableDueDate', 'amountDue', 'budgetAmount',
-                                'isAutoPaid', 'isSubscription'];
+                                'isAutoPaid', 'isSubscription', 'menuAction'];
   billSource$: Observable<any>;
 
   constructor(public dialog: MatDialog,
@@ -43,6 +45,13 @@ export class BillsComponent implements OnInit {
   onNewBill() {
     this.dialog.open(NewBillDialogComponent, {
       width: '50%'
+    });
+  }
+
+  onEditBill(bill: Bill) {
+    this.dialog.open(NewBillDialogComponent, {
+      width: '50%',
+      data: bill
     });
   }
 }

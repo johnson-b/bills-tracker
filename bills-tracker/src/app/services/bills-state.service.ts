@@ -27,9 +27,18 @@ export class BillsStateService {
     return isComplete;
   }
 
-  saveNewBill(bill: Bill): Observable<any> {
+  upsertNewBill(bill: Bill): Observable<any> {
     const isComplete: Subject<any> = new Subject();
-    this.billsApi.saveBill(bill).subscribe(() => {
+    this.billsApi.upsertBill(bill).subscribe(() => {
+      this.refreshBills();
+      isComplete.next();
+    });
+    return isComplete;
+  }
+
+  deleteBill(id: string): Observable<any> {
+    const isComplete: Subject<any> = new Subject();
+    this.billsApi.deleteBill(id).subscribe(() => {
       this.refreshBills();
       isComplete.next();
     });

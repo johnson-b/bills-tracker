@@ -69,10 +69,12 @@ export class NewBillDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onCreateNewBill() {
+  onUpsertNewBill() {
     this.isLoading = true;
-    this.billState.saveNewBill(this.billForm.getRawValue() as Bill).subscribe(() => {
+    this.newBill = this.billForm.value as Bill;
+    this.billState.upsertNewBill(this.newBill).subscribe(() => {
       this.isLoading = false;
+      this.dialogRef.close();
     }, err => console.error('Error saving bill', err));
   }
 
@@ -86,6 +88,7 @@ export class NewBillDialogComponent implements OnInit {
 
   private initializeForm() {
     this.billForm = this.formBuilder.group({
+      id: [this.newBill.id],
       name: [this.newBill.name, Validators.required],
       type: [this.newBill.type, Validators.required],
       amountDue: [this.newBill.amountDue, Validators.required],
