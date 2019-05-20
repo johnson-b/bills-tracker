@@ -12,23 +12,10 @@
 
 <mat-card>
   <table mat-table [dataSource]="billSource$ | async" matSort class="bills-table">
-    <ng-container matColumnDef="deleteAction">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <div style="text-align:center" (click)="onDelete(element)">
-          <fa-icon [icon]="deleteIcon"></fa-icon>
-        </div>
-      </td>
-    </ng-container>
 
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef>Type</th>
       <td mat-cell *matCellDef="let element">{{element.type}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="isActive">
-      <th mat-header-cell *matHeaderCellDef>Is Active</th>
-      <td mat-cell *matCellDef="let element">{{element.isActive}}</td>
     </ng-container>
 
     <ng-container matColumnDef="name">
@@ -41,29 +28,14 @@
       <td mat-cell *matCellDef="let element">{{element.dueDay}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="isVariableDueDate">
-      <th mat-header-cell *matHeaderCellDef>Is Variable Due Date</th>
-      <td mat-cell *matCellDef="let element">{{element.isVariableDueDate}}</td>
-    </ng-container>
-
     <ng-container matColumnDef="amountDue">
       <th mat-header-cell *matHeaderCellDef>Amount Due</th>
-      <td mat-cell *matCellDef="let element">{{element.amountDue}}</td>
+      <td mat-cell *matCellDef="let element">{{element.amountDue | currency}}</td>
     </ng-container>
 
     <ng-container matColumnDef="budgetAmount">
       <th mat-header-cell *matHeaderCellDef>Budget Amount</th>
-      <td mat-cell *matCellDef="let element">{{element.budgetAmount}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="isAutoPaid">
-      <th mat-header-cell *matHeaderCellDef>Is Auto Paid</th>
-      <td mat-cell *matCellDef="let element">{{element.isAutoPaid}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="isSubscription">
-      <th mat-header-cell *matHeaderCellDef>Is Subscription</th>
-      <td mat-cell *matCellDef="let element">{{element.isSubscription}}</td>
+      <td mat-cell *matCellDef="let element">{{element.budgetAmount | currency}}</td>
     </ng-container>
 
     <ng-container matColumnDef="menuAction">
@@ -74,6 +46,7 @@
         </div>
         <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
           <button mat-menu-item (click)="onEditBill(element)">Edit</button>
+          <button mat-menu-item (click)="onDelete(element)">Delete</button>
         </mat-menu>
       </td>
     </ng-container>
