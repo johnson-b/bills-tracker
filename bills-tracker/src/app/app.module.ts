@@ -12,13 +12,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { NewBillDialogComponent } from './new-bill-dialog/new-bill-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BillsSummaryDialogComponent } from './bills-summary-dialog/bills-summary-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BillsComponent,
     DeleteDialogComponent,
-    NewBillDialogComponent
+    NewBillDialogComponent,
+    BillsSummaryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DeleteDialogComponent, NewBillDialogComponent]
+  entryComponents: [DeleteDialogComponent, NewBillDialogComponent, BillsSummaryDialogComponent]
 })
 export class AppModule { }
