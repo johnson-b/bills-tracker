@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { faMinusCircle, faPlus, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faMinusCircle, faPlus, faCaretDown, faRobot } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { NewBillDialogComponent } from '../new-bill-dialog/new-bill-dialog.component';
@@ -17,12 +17,12 @@ export class BillsComponent implements OnInit {
   deleteIcon = faMinusCircle;
   plusIcon = faPlus;
   caretDownIcon = faCaretDown;
+  autoIcon = faRobot;
 
-  displayedColumns: string[] = ['deleteAction', 'name', 'type', 'isActive', 'dueDay', 'isVariableDueDate', 'amountDue', 'budgetAmount',
-                                'isAutoPaid', 'isSubscription', 'menuAction'];
+  displayedColumns: string[] = ['name', 'type', 'dueDay', 'amountDue', 'budgetAmount', 'menuAction'];
   billSource$: Observable<any>;
 
-  constructor(public dialog: MatDialog,
+  constructor(private dialog: MatDialog,
               private billState: BillsStateService) {
       this.billSource$ = billState.bills$;
   }
@@ -31,7 +31,7 @@ export class BillsComponent implements OnInit {
     this.init();
   }
 
-  init() {
+  private init() {
     this.billState.refreshBills();
   }
 

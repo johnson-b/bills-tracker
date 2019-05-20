@@ -21,7 +21,7 @@ export class BillsStateService {
     this.billsApi.getAllBills().pipe(
       catchError((err, caught) => of([])),
     ).subscribe((bills: Bill[]) => {
-      this._bills$.next(bills);
+      this.sortByDueDate(bills);
       isComplete.next();
     });
     return isComplete;
@@ -43,5 +43,18 @@ export class BillsStateService {
       isComplete.next();
     });
     return isComplete;
+  }
+
+  sortByDueDate(bills: Bill[]) {
+    if (bills) {
+      bills.sort((aBill: Bill, bBill: Bill) => {
+        if (aBill.dueDay > bBill.dueDay) { return 1; }
+        if (aBill.dueDay < bBill.dueDay) { return -1; } else { return 0; }
+      });
+
+      const newBills: Bill[] = [];
+      bills.forEach((bill: Bill) => newBills.push(new Bill(bill)));
+      this._bills$.next(newBills);
+    }
   }
 }
